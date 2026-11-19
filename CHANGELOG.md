@@ -20,6 +20,7 @@ Bug fixes
 * (Fuzzing) Fixed panic when assigning to a property of a constant object.
 * Fixed undefined behavior (an aliasing violation detected by Miri) when a variable is passed to a function that does not take its first argument by `&mut`, e.g. `x.contains("a")` or `f(x)` for a script function. This was a regression in 1.27.0.
 * `sort` and `sort_desc` no longer panic on an array of floating-point numbers that contains NaN. NaN now sorts after every other number (before them for `sort_desc`) (thanks [`@Rockyrok77`](https://github.com/Rockyrok77)).
+* `to_json` and serializing a `Dynamic` with `serde` no longer panic or overflow the stack when an object map contains a closure that captures the map itself (a reference loop). The built-in formatter writes `null` where the loop closes, while `serde` returns an error (thanks [`@Rockyrok77`](https://github.com/Rockyrok77)).
 
 Enhancements
 ------------
